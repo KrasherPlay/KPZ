@@ -1,76 +1,68 @@
-# jagged_matrix_generator.py
-
 import sys
 
-def create_centered_triangle(size, fill_char):
+def generate_shaded_array(size: int, fill_char: str) -> list[list[str]]:
     """
-    Створює та повертає список рядків, що формують рівнобедрений
-    трикутник, спрямований від верхнього краю до центру.
+    Генерує "зубчатий" масив у формі перевернутого трикутника.
 
     Args:
-        size (int): Ширина основи трикутника (розмір матриці).
+        size (int): Розмір матриці.
         fill_char (str): Символ для заповнення.
 
     Returns:
-        list: Список рядків (string), що візуально представляють трикутник.
+        list[list[str]]: Згенерований зубчатий масив.
     """
-    triangle_rows = []  # Ініціалізуємо порожній список для рядків трикутника
+    jagged_array = []
+    mid_row = (size + 1) // 2
+    for i in range(size):
+        if i < mid_row:
+            count = size - 2 * i
+            row = [fill_char] * count
+            jagged_array.append(row)
+        else:
+            jagged_array.append([])
+    return jagged_array
 
-    # Кількість рядків у трикутнику буде приблизно size / 2
-    # Використовуємо цілочисельне ділення: (size + 1) // 2
-    for i in range((size + 1) // 2):
-        # 1. Розраховуємо кількість символів у поточному рядку.
-        # З кожним рядком їх стає на 2 менше (по одному з кожного боку).
-        num_chars = size - (2 * i)
+def print_array_to_console(array: list[list[str]]):
+    """
+    Виводить масив на консоль, центрує кожен рядок.
 
-        # Якщо символів не лишилось, виходимо з циклу
-        if num_chars <= 0:
-            break
-
-        # 2. Розраховуємо кількість відступів (пробілів) зліва для центрування.
-        # Кількість відступів дорівнює номеру поточного рядка 'i'.
-        padding = ' ' * i
-
-        # 3. Формуємо рядок: відступи + символи
-        row_string = padding + (fill_char * num_chars)
-
-        # 4. Додаємо готовий рядок до нашого списку
-        triangle_rows.append(row_string)
-
-    return triangle_rows
+    Args:
+        array (list[list[str]]): Масив для виведення.
+    """
+    size = len(array)
+    for row in array:
+        padding = (size - len(row)) // 2
+        print("  " * padding, end="")
+        print(" ".join(row))
 
 def main():
     """
-    Головна функція для взаємодії з користувачем,
-    отримання даних, виклику генерації та виведення результату.
+    Основна функція програми.
     """
-    # --- Введення та валідація розміру матриці ---
     try:
-        matrix_size_str = input("Введіть розмір (ширину основи трикутника): ")
-        matrix_size = int(matrix_size_str)
-        if matrix_size <= 0:
-            print("Помилка: Розмір має бути додатнім числом.")
+        size_input = input("Введіть розмір квадратної матриці (n > 0): ")
+        if not size_input.isdigit():
+            print("Помилка: Розмір матриці має бути цілим числом.", file=sys.stderr)
             return
-    except ValueError:
-        print("Помилка: Розмір має бути цілим числом.")
-        return
 
-    # --- Введення та валідація символу-заповнювача ---
-    fill_character = input("Введіть символ-заповнювач: ")
+        size = int(size_input)
+        if size <= 0:
+            print("Помилка: розмір матриці має бути додатнім числом.", file=sys.stderr)
+            return
 
-    if len(fill_character) != 1:
-        print("\nПомилка: Ви повинні ввести рівно один символ-заповнювач.")
-        print("Роботу програми перервано.")
-        sys.exit()
+        fill_char = input("Введіть один символ-заповнювач: ")
+        if len(fill_char) != 1:
+            print("Помилка: потрібно ввести рівно один символ.", file=sys.stderr)
+            return
 
-    # --- Генерація та виведення трикутника ---
-    generated_triangle = create_centered_triangle(matrix_size, fill_character)
+        # --- Генерація та вивід масиву ---
+        shaded_array = generate_shaded_array(size, fill_char)
 
-    print("\nСформований трикутник:")
-    # Виводимо результат на екран, кожен елемент (рядок) з нової лінії
-    for row_item in generated_triangle:
-        print(row_item)
+        print("\nЗгенерований зубчатий масив:")
+        print_array_to_console(shaded_array)
 
-# Точка входу в програму
+    except Exception as e:
+        print(f"Сталася помилка під час виконання програми: {e}", file=sys.stderr)
+
 if __name__ == "__main__":
     main()

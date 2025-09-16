@@ -6,23 +6,23 @@ public class Lab1TupisMaksym {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         try {
-            // --- Введення розміру матриці ---
+            
             System.out.print("Введіть розмір квадратної матриці (n > 0): ");
             int size = scanner.nextInt();
             if (size <= 0) {
                 System.out.println("Помилка: розмір матриці має бути додатнім числом.");
-                return; // Завершення програми
+                return; 
             }
             scanner.nextLine(); // Споживаємо залишок рядка після nextInt()
 
-            // --- Введення символу-заповнювача ---
+            
             System.out.print("Введіть один символ-заповнювач: ");
             String inputChar = scanner.nextLine();
 
-            // Перевірка коректності введеного символу
+            
             if (inputChar.length() != 1) {
                 System.out.println("Помилка: потрібно ввести рівно один символ.");
-                return; // Завершення програми
+                return; 
             }
             char fillChar = inputChar.charAt(0);
 
@@ -50,12 +50,14 @@ public class Lab1TupisMaksym {
         for (int i = 0; i < size; i++) {
             if (i < midRow) {
                 // Розраховуємо кількість символів у рядку, що зменшується
-                // від size до 1 (для непарного розміру) або 2 (для парного)
                 int count = size - 2 * i;
                 jaggedArray[i] = new char[count];
                 for (int j = 0; j < count; j++) {
                     jaggedArray[i][j] = fillChar;
                 }
+                 if (count > 0) { 
+                jaggedArray[i][count - 1] = '#';
+            }
             } else {
                 // Решта рядків залишаються порожніми
                 jaggedArray[i] = new char[0];
