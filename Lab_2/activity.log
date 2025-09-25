@@ -1,0 +1,8 @@
+2025-09-25 18:20:24 - Method calculateEnergyConsumption() called for: Samsung Chef
+2025-09-25 18:20:24 - Method showAllAttributes() called for: Samsung Chef
+2025-09-25 18:20:25 - Method showAllAttributes() called for: Bosch
+2025-09-25 18:20:25 - comparePower(ElectricStove other) called
+2025-09-25 18:23:55 - Method calculateEnergyConsumption() called for: Samsung Chef
+2025-09-25 18:23:55 - Method showAllAttributes() called for: Samsung Chef
+2025-09-25 18:23:55 - Method showAllAttributes() called for: Bosch
+2025-09-25 18:23:55 - comparePower(ElectricStove other) called
